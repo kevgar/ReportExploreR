@@ -7,11 +7,8 @@ library(DT)
 library(shinythemes)
 library(RColorBrewer)
 library(data.table)
-<<<<<<< HEAD
-=======
-library(devtools)
+# library(devtools)
 # devtools::install_github('hadley/ggplot2')
->>>>>>> 549f654a64ea4955bb832764d426a502015db5ea
 library(ggplot2)
 library(plotly)
 
