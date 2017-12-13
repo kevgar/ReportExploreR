@@ -5,7 +5,6 @@ library(edgar)
 library(shinycssloaders)
 library(DT)
 library(shinythemes)
-library(RColorBrewer)
 library(data.table)
 # library(devtools)
 # devtools::install_github('hadley/ggplot2')
@@ -52,7 +51,7 @@ files_df <- getCleanFilingInfo()
 # corpus_vec <- unlist(sapply(corp, "[", "content"))
 # # class(corpus_vec) # [1] "character"
 # 
-# # 
+# 
 # poa_word_v <- get_tokens(corpus_vec, pattern = "\\W")
 # # class(poa_word_v) # [1] "character"
 # # length(poa_word_v) # [1] 3075936
@@ -89,77 +88,3 @@ files_df <- getCleanFilingInfo()
 # 
 # summary(posMinusNeg)
 # boxplot(posMinusNeg)
-# 
-# 
-# # Plot sentiment over time
-# FileSize <- round(files_df$size_MB[isNotEmpty],2)
-# Sentiment <- posMinusNeg
-# f10k <- files_df$report_type[isNotEmpty]=='10-K'
-# date <- files_df$report_date[isNotEmpty]
-# 
-# plot(date,Sentiment,  type='l')
-# plot(FileSize,Sentiment)
-# plot(FileSize[f10k],Sentiment[f10k], main='Sentiment of 10-K versus file size')
-# plot(FileSize[!f10k],Sentiment[!f10k], main='Sentiment of 10-Q versus file size')
-# 
-# 
-# 
-# 
-# #################################################
-# # Visualization
-# #################################################
-# 
-# 
-# # Plot 10K and 10Q sentiments over narrative time
-# 
-# 
-# # Plot moving average sentiment over narative time
-# disclosure_sentiment <- get_sentiment(corpus_vec)
-# simple_plot(disclosure_sentiment)
-# 
-# f10k_sentiment <- get_sentiment(corpus_vec[f10k])
-# f10q_sentiment <- get_sentiment(corpus_vec[!f10k])
-# 
-# pwdw <- round(length(f10k_sentiment)*.1)
-# f10k_rolled <- zoo::rollmean(f10k_sentiment, k=pwdw)
-# bwdw <- round(length(f10q_sentiment)*.1)
-# f10q_rolled <- zoo::rollmean(f10q_sentiment, k=bwdw)
-# 
-# f10k_list <- rescale_x_2(f10k_rolled)
-# f10q_list <- rescale_x_2(f10q_rolled)
-# plot(f10k_list$x, f10k_list$z, type="l", 
-#      col="blue", 
-#      xlab="Narrative Time", 
-#      ylab="Emotional Valence")
-# lines(f10q_list$x, f10q_list$z, col="red")
-# legend("bottomright",legend = c("f10k","f10q"),lty=1,col=c("blue","red"))
-# 
-# 
-# # Plot lowess smoothed sentiments over time
-# 
-# f10k_sentiment <- get_sentiment(corpus_vec[f10k])
-# f10q_sentiment <- get_sentiment(corpus_vec[!f10k])
-# 
-# 
-# f10k_x <- 1:length(f10k_sentiment)
-# f10k_y <- f10k_sentiment
-# 
-# raw_f10k <- loess(f10k_y ~ f10k_x, span=.5)
-# f10k_line <- rescale(predict(raw_f10k))
-# 
-# 
-# f10q_x <- 1:length(f10q_sentiment)
-# f10q_y <- f10q_sentiment
-# 
-# raw_f10q <- loess(f10q_y ~ f10q_x, span=.5)
-# f10q_line <- rescale(predict(raw_f10q))
-# 
-# f10k_sample <- seq(1, length(f10k_line), by=round(length(f10k_line)/100, 2))
-# f10q_sample <- seq(1, length(f10q_line), by=round(length(f10q_line)/100, 2))
-# 
-# plot(f10k_line[f10k_sample], type="l", col="blue", 
-#      main="Loess Smoothed Lines of Sentiments",
-#      xlab="Narrative Time (sampled)", 
-#      ylab="Emotional Valence")
-# lines(f10q_line[f10q_sample], col="red")
-# legend("bottomright",legend = c("f10k","f10q"),lty=1,col=c("blue","red"))
